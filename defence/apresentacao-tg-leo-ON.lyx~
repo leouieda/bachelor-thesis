@@ -1,0 +1,4233 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{default} 
+%\usetheme{Madrid} 
+%\usetheme{Rochester}
+%\usepackage{avant}
+%\usepackage{helvet}
+
+\setbeamercolor{normal text}{fg=white,bg=black} 
+%\setbeamercolor{structure}{fg=white}
+%\setbeamercolor{title}{fg=white}
+%\setbeamercolor{normal text}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=black}
+\xdefinecolor{mycolor}{rgb}{0.96,1.00,0.49}
+\setbeamercolor{structure}{fg=mycolor}
+\usefonttheme{structurebold}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{blackboard.jpg}}
+\end_preamble
+\use_default_options true
+\language brazilian
+\inputencoding auto
+\font_roman default
+\font_sans helvet
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Cálculo do tensor gradiente gravimétrico utilizando tesseróides
+\end_layout
+
+\begin_layout Author
+Leonardo Uieda
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+Naomi Ussami
+\end_layout
+
+\begin_layout Institute
+
+\shape italic
+Universidade de São Paulo
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+Instituto de Astronomia, Geofísica e Ciências Atmosféricas
+\end_layout
+
+\begin_layout Date
+10 de Março de 2010
+\end_layout
+
+\begin_layout BeginFrame
+Sumário
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Introdução
+\end_layout
+
+\begin_layout BeginFrame
+Introdução
+\end_layout
+
+\begin_layout Standard
+GOCE:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+G
+\series default
+ravity field and steady-state 
+\series bold
+O
+\series default
+cean 
+\series bold
+C
+\series default
+irculation 
+\series bold
+E
+\series default
+xplorer
+\end_layout
+
+\begin_layout Itemize
+Missão da ESA (
+\series bold
+E
+\series default
+uropean 
+\series bold
+S
+\series default
+pance 
+\series bold
+A
+\series default
+gency)
+\end_layout
+
+\begin_layout Itemize
+Medir o 
+\series bold
+T
+\series default
+ensor 
+\series bold
+G
+\series default
+radiente da 
+\series bold
+G
+\series default
+ravidade (TGG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Gravimetria por satélite:
+\end_layout
+
+\begin_layout Itemize
+Dados cobrem todo o globo
+\end_layout
+
+\begin_layout Itemize
+Cobertura contínua e homogênea (não seria possível utilizando métodos terrestres
+)
+\end_layout
+
+\begin_layout Itemize
+Estudar áreas extensas (estudos litosféricos)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+ apresentam limitações
+\end_layout
+
+\begin_layout Itemize
+Levar em conta a curvatura da Terra
+\end_layout
+
+\begin_layout Itemize
+Prismas retangulares podem não ser uma aproximação adequada
+\end_layout
+
+\begin_layout Itemize
+Alternativa: utilizar tesseróides (prismas esféricos)
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Introdução
+\end_layout
+
+\begin_layout Standard
+Modelagem com tesseróides:
+\end_layout
+
+\begin_layout Itemize
+TGG não possue solução analítica (exceto em casos especiais)
+\end_layout
+
+\begin_layout Itemize
+Métodos numéricos de integração
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Expansão em série de Taylor (HECK; SEITZ, 2007)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Aceitável quando o tesseróide está longe do ponto de observação e em regiões
+ de baixa latitude
+\end_layout
+
+\begin_layout Itemize
+Não deve ser utilizada caso contrário
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Q
+\series default
+uadratura 
+\series bold
+G
+\series default
+auss-
+\series bold
+L
+\series default
+egendre (QGL) (ASGHARZADEH 
+\shape italic
+et al.
+\shape default
+, 2007; WILD-PFEIFFER, 2008)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Inicialmente utilizada em métodos potenciais em Ku (1977)
+\end_layout
+
+\begin_layout Itemize
+Trabalhos publicados até o momento sugerem que a QGL é o método mais adequado
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Introdução
+\end_layout
+
+\begin_layout Standard
+Neste trabalho:
+\end_layout
+
+\begin_layout Itemize
+Tesseróides serão utilizados no cálculo direto do TGG
+\end_layout
+
+\begin_layout Itemize
+Implementação de um programa computacional seguindo a abordagem de Wild-Pfeiffer
+ (2008)
+\end_layout
+
+\begin_layout Itemize
+Precisão pode ser avaliada comparando com o resultado de fórmulas analíticas
+ (casca esférica)
+\end_layout
+
+\begin_layout Itemize
+Avaliar se sofre das mesmas limitações observadas por Ku (1977)
+\end_layout
+
+\begin_layout Itemize
+Calcular as diferenças causadas no TGG por utilizar 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Calcular o efeito da topografia da bacia do Paraná no TGG a 250 km de altitude
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Formulação Matemárica
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout Itemize
+Definir os sistemas de coordenadas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Transformações entre os sistemas de coordenadas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Definir o que é um tesseróide
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+TGG em coordenadas esféricas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+QGL
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+Sistemas de coordendas e Tesseróide
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{4cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\series bold
+\size footnotesize
+Sistema Global (G):
+\end_layout
+
+\begin_layout Columns
+
+\size scriptsize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item Origem no geocentro
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item $
+\backslash
+text{Z}^
+\backslash
+text{G}$ aponta para o Norte
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item $
+\backslash
+text{X}^
+\backslash
+text{G}$ aponta para Greenwich médio
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item Sistema destro
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\series bold
+\size footnotesize
+Sistema Local (L):
+\end_layout
+
+\begin_layout Columns
+
+\size scriptsize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item Origem no ponto P
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item $
+\backslash
+text{z}^
+\backslash
+text{L}$ aponta para para fora
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item $
+\backslash
+text{x}^
+\backslash
+text{L}$ aponta para o Norte
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+item Sistema sinistral
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{6cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/tesseroid_coordsys_other.jpg
+	lyxscale 5
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+Transformações entre sistemas de coordenadas
+\end_layout
+
+\begin_layout Standard
+Transformar coordenadas de Q:
+\end_layout
+
+\begin_layout Itemize
+Do 
+\series bold
+sistema global
+\series default
+ para o 
+\series bold
+sistema local de P
+\series default
+:
+\begin_inset Formula \[
+\mathbf{e}_{Q}^{L_{P}}=\mathbf{P}_{2}\mathbf{R}_{2}\left(\varphi_{P}-\dfrac{\pi}{2}\right)\mathbf{R}_{3}\left(\lambda_{P}-\pi\right)(\mathbf{e}_{Q}^{G}-\mathbf{e}_{P}^{G})\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Do 
+\series bold
+sistema local de P
+\series default
+ para o 
+\series bold
+sistema global
+\series default
+:
+\begin_inset Formula \[
+\mathbf{e}_{Q}^{G}=\mathbf{R}_{3}\left(\pi-\lambda_{P}\right)\mathbf{R}_{2}\left(\dfrac{\pi}{2}-\varphi_{P}\right)\mathbf{P}_{2}\mathbf{e}_{Q}^{L_{P}}+\mathbf{e}_{Q}^{G}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+Transformações entre sistemas de coordenadas
+\end_layout
+
+\begin_layout Standard
+Transformar a orientação de um vetor 
+\begin_inset Formula $\mathbf{{e}}$
+\end_inset
+
+ do 
+\series bold
+sistema local de Q
+\series default
+ para o 
+\series bold
+sistema local de P
+\series default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\mathbf{e}^{L_{P}}=\underbrace{\mathbf{P}_{2}\mathbf{R}_{2}\left(\varphi_{P}-\dfrac{\pi}{2}\right)\mathbf{R}_{3}\left(\lambda_{P}-\lambda_{Q}\right)\mathbf{R}_{2}\left(\dfrac{\pi}{2}-\varphi_{Q}\right)\mathbf{P}_{2}}_{\mathbf{R}^{QP}}\mathbf{e}^{L_{Q}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\mathbf{R}^{QP}=\mathbf{P}_{2}\mathbf{R}_{2}\left(\varphi_{P}-\dfrac{\pi}{2}\right)\mathbf{R}_{3}\left(\lambda_{P}-\lambda_{Q}\right)\mathbf{R}_{2}\left(\dfrac{\pi}{2}-\varphi_{Q}\right)\mathbf{P}_{2}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+TGG em coordenadas esféricas
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+TGG é um tensor com 9 elementos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+T=\begin{pmatrix}T_{xx} & T_{xy} & T_{xz}\\
+T_{yx} & T_{yy} & T_{yz}\\
+T_{zx} & T_{zy} & T_{zz}\end{pmatrix}=\begin{pmatrix}\dfrac{\partial^{2}V}{\partial x^{2}} & \dfrac{\partial^{2}V}{\partial x\partial y} & \dfrac{\partial^{2}V}{\partial x\partial z}\\[4mm]
+\dfrac{\partial^{2}V}{\partial y\partial x} & \dfrac{\partial^{2}V}{\partial y^{2}} & \dfrac{\partial^{2}V}{\partial y\partial z}\\[4mm]
+\dfrac{\partial^{2}V}{\partial z\partial x} & \dfrac{\partial^{2}V}{\partial z\partial y} & \dfrac{\partial^{2}V}{\partial z^{2}}\end{pmatrix}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.5cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T$
+\end_inset
+
+ é simétrico e possui 5 elementos independentes.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+Em coordenadas esféricas as componentes de 
+\begin_inset Formula $T$
+\end_inset
+
+ são dados por (TSCHERNING, 1976):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{5cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset Formula \[
+T_{xx}=\dfrac{1}{r^{2}}\left(\dfrac{\partial^{2}V}{\partial\varphi^{2}}+r\dfrac{\partial V}{\partial r}\right)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset Formula \[
+T_{xy}=\dfrac{1}{r^{2}\cos\varphi}\left(\dfrac{\partial^{2}V}{\partial\varphi\partial\lambda}+\tan\varphi\dfrac{\partial V}{\partial\lambda}\right)=T_{yx}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset Formula \[
+T_{xz}=\dfrac{1}{r}\left(\dfrac{\partial^{2}V}{\partial\varphi\partial r}-\dfrac{1}{r}\dfrac{\partial V}{\partial\varphi}\right)=T_{zx}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{7cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*}
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{yy} = 
+\backslash
+dfrac{1}{r^2 
+\backslash
+cos^2
+\backslash
+varphi} 
+\backslash
+Bigl(&     
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+dfrac{
+\backslash
+partial^2 V}{
+\backslash
+partial 
+\backslash
+lambda^2} +     
+\end_layout
+
+\begin_layout Plain Layout
+
+  r
+\backslash
+cos^2
+\backslash
+varphi
+\backslash
+dfrac{
+\backslash
+partial V}{
+\backslash
+partial r} -     
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  &
+\backslash
+cos
+\backslash
+varphi 
+\backslash
+sin
+\backslash
+varphi 
+\backslash
+dfrac{
+\backslash
+partial V}{
+\backslash
+partial 
+\backslash
+varphi}  
+\backslash
+Bigr)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset Formula \[
+T_{yz}=\dfrac{1}{r\cos\varphi}\left(\dfrac{\partial^{2}V}{\partial r\partial\lambda}-\dfrac{1}{r}\dfrac{\partial V}{\partial\lambda}\right)=T_{zy}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset Formula \[
+T_{zz}=\dfrac{\partial^{2}V}{\partial r^{2}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+\align block
+Para obter o TGG de um tesseróide basta substituir 
+\begin_inset Formula $V$
+\end_inset
+
+ pelo potencial gravitacional de um tesseróide:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+V(r,\varphi,\lambda)=G\rho\int\limits _{\lambda_{1}}^{\lambda_{2}}\int\limits _{\varphi_{1}}^{\varphi_{2}}\int\limits _{r_{1}}^{r_{2}}\dfrac{1}{l}r'^{2}\cos\varphi'\ dr'\ d\varphi'\ d\lambda'\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+l=\sqrt{r^{2}+{r'}^{2}-2rr'\cos\psi}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\cos\psi=\sin\varphi\sin\varphi'+\cos\varphi\cos\varphi'\cos(\lambda-\lambda')\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align block
+As integrais triplas resultantes podem ser revolvidas numericamente com
+ a QGL
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Quadratura Gauss-Legendre (QGL)
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+QGL
+\end_layout
+
+\begin_layout Standard
+A QGL consiste em:
+\end_layout
+
+\begin_layout Enumerate
+Discretizar o integrando
+\end_layout
+
+\begin_layout Enumerate
+Aproximar a integral por uma somatória
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\int\limits _{a}^{b}f(x)\ dx\approx\dfrac{b-a}{2}\sum\limits _{i=1}^{N}W_{i}\ f(x_{i})\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ são os pontos de discretização (dados pelas raízes do polinômio de Legendre
+ 
+\begin_inset Formula $P_{N}(x)$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ são os pesos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+W_{i}=\dfrac{2}{(1-x_{i}^{2})\left(P_{N}'(x_{i})\right)^{2}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Formulação Matemática
+\end_layout
+
+\begin_layout FrameSubtitle
+QGL
+\end_layout
+
+\begin_layout Standard
+Pode ser estendida para integrais duplas (2D):
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\begin_inset Formula \[
+\int\limits _{x_{1}}^{x_{2}}\int\limits _{y_{1}}^{y_{2}}f(x,y)\ dx\ dy\approx\dfrac{(x_{2}-x_{1})(y_{2}-y_{1})}{4}\sum\limits _{i=1}^{N_{x}}\sum\limits _{j=1}^{N_{y}}W_{x,i}\ W_{y,j}\ f(x_{i},y_{j})\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ou triplas (3D):
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multline*}   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+int
+\backslash
+limits_{x_1}^{x_2}   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+int
+\backslash
+limits_{y_1}^{y_2}   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+int
+\backslash
+limits_{z_1}^{z_2}   
+\end_layout
+
+\begin_layout Plain Layout
+
+f(x,y,z)
+\backslash
+ dx
+\backslash
+ dy
+\backslash
+ dz  
+\backslash
+approx     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+dfrac{(x_2 - x_1)(y_2 - y_1)(z_2 - z_1)}{8}     
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+sum
+\backslash
+limits_{i=1}^{N_x}    
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+sum
+\backslash
+limits_{j=1}^{N_y}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+sum
+\backslash
+limits_{k=1}^{N_z}     
+\end_layout
+
+\begin_layout Plain Layout
+
+W_{x,i}
+\backslash
+ W_{y,j}
+\backslash
+ W_{z,k}
+\backslash
+ f(x_i, y_j, z_k)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multline*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Implementação Computacional
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout Itemize
+Linguagem de programação
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Implementação da QGL
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+TGG de tesseróides
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+TGG de prismas retangulares em coordenadas esféricas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+TGG de uma casca esférica
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+Linguagem de programação
+\end_layout
+
+\begin_layout Standard
+A linguagem escolhida foi a linguagem 
+\series bold
+Python:
+\end_layout
+
+\begin_layout Itemize
+Rápido desenvolvimento do um programa
+\end_layout
+
+\begin_layout Itemize
+Vasta biblioteca padrão
+\end_layout
+
+\begin_layout Itemize
+Multi-paradigma
+\end_layout
+
+\begin_layout Itemize
+Pode ser utilizada como scrips
+\end_layout
+
+\begin_layout Itemize
+Modularidade facilita extensão e reutilização de programas
+\end_layout
+
+\begin_layout Itemize
+Independentes do sistema operacional
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Problema:
+\end_layout
+
+\begin_layout Itemize
+Python possui pior performance que a linguagem C
+\end_layout
+
+\begin_layout Itemize
+Pode ser superado!
+\end_layout
+
+\begin_layout Itemize
+Python pode ser extendido com módulos escritos em C
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+Linguagem de programação
+\end_layout
+
+\begin_layout Standard
+O programa desenvolvido:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Desenvolvido utilizando Programação Orientada a Objetos
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.5cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Hospedado no servidor do Google Code (
+\series bold
+http://code.google.com/p/tesseroids/
+\series default
+)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.5cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Software livre (GNU General Public License 3.0)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.5cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Implementação da QGL
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+Implementação da QGL
+\end_layout
+
+\begin_layout Standard
+Cálculo dos pontos de discretização (nós) da QGL
+\end_layout
+
+\begin_layout Itemize
+Método de Newton Modificado (BARRERA-FIGUEROA 
+\shape italic
+et al.
+\shape default
+, 2006)
+\begin_inset Formula \[
+\xi_{k,n+1}=\xi_{k,n}-\dfrac{P_{N}(\xi_{k,n})}{P_{N}'(\xi_{k,n})-P_{N}(\xi_{k,n}){\displaystyle \sum\limits _{i=1}^{k-1}\dfrac{1}{\xi_{k,n}-\xi_{i}}}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Chute inicial de Press 
+\shape italic
+et al.
+
+\shape default
+ (1992)
+\begin_inset Formula \[
+\xi_{k,0}=\dfrac{\cos\left(\pi k-\frac{\pi}{4}\right)}{N+\frac{1}{2}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+Implementação da QGL
+\end_layout
+
+\begin_layout Standard
+Polinômios de Legendre calculados com:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+P_{N}'(x)=\dfrac{N}{x^{2}-1}\left(xP_{n}(x)-P_{N-1}(x)\right)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+P_{N}(x)=x\dfrac{2N-1}{N}P_{N-1}(x)-\dfrac{N-1}{N}P_{N-2}(x)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+TGG de tesseróides
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de tesseróides
+\end_layout
+
+\begin_layout Standard
+Utilizada a metodologia de Wild-Pfeiffer (2008):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Integração analítica na direção radial
+\end_layout
+
+\begin_layout Itemize
+Integração numérica da integral dupla resultante
+\end_layout
+
+\begin_layout Itemize
+Melhor performance que utilizando somente a QGL 3D
+\end_layout
+
+\begin_layout Itemize
+Integrais duplas apresentam uma singularidade quando 
+\begin_inset Formula $\psi=0^{\circ}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Não está presente nas integrais triplas
+\end_layout
+
+\begin_layout Itemize
+Produz uma mensagem de erro
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Quando erro ocorre é utilizada QGL 3D, evitando a singularidade
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+TGG de prismas retangulares
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+ em coordenadas esféricas
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de prismas retangulares em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+Tesseróide é aproximado por um prisma retangular:
+\end_layout
+
+\begin_layout Itemize
+Mesmo volume, densidade e altura do tesseróide
+\end_layout
+
+\begin_layout Itemize
+Tesseróide é muito pequeno (
+\begin_inset Formula $\sin\Delta\varphi=\Delta\varphi$
+\end_inset
+
+) 
+\end_layout
+
+\begin_layout Itemize
+Altura do tesseróide muito pequena (
+\begin_inset Formula $\Delta r\ll r_{1}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dimensões do prisma (WILD-PFEIFFER, 2008):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*}   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Delta x &= 
+\backslash
+dfrac{r_1 + r_2}{2} 
+\backslash
+Delta 
+\backslash
+varphi   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Delta y &= 
+\backslash
+dfrac{r_1 + r_2}{2} 
+\backslash
+cos 
+\backslash
+left(
+\backslash
+dfrac{
+\backslash
+varphi_1 + 
+\backslash
+varphi_2}{2}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+right) 
+\backslash
+Delta 
+\backslash
+lambda  
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Delta z &= 
+\backslash
+Delta r   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de prismas retangulares em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+Fórmulas analíticas são dadas em Nagy 
+\shape italic
+et al.
+
+\shape default
+ (2000)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Assumida uma aproximação plana para a Terra
+\end_layout
+
+\begin_layout Itemize
+O 
+\series bold
+sistema local do prisma
+\series default
+ tem a mesma orientação do 
+\series bold
+sistema local do ponto de observação
+\end_layout
+
+\begin_layout Itemize
+Para a Terra esférica o 
+\series bold
+sistema local do ponto de observação
+\series default
+ não terá a mesma orientação do 
+\series bold
+sistema local do prisma
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de prismas retangulares em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/coordinate_sys.jpg
+	lyxscale 5
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de prismas retangulares em coordenadas esféricas
+\end_layout
+
+\begin_layout Standard
+É necessário converter o TGG para o 
+\series bold
+sistema local do ponto de observação
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula \[
+T^{L_{ob}}=R\ T^{L_{pr}}R^{T}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\mathbf{R}=\mathbf{P}_{2}\mathbf{R}_{2}\left(\varphi_{ob}-\dfrac{\pi}{2}\right)\mathbf{R}_{3}\left(\lambda_{ob}-\lambda_{pr}\right)\mathbf{R}_{2}\left(\dfrac{\pi}{2}-\varphi_{pr}\right)\mathbf{P}_{2}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+TGG de uma casca esférica
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de uma casca esférica
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{5cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+Utilizado para:
+\end_layout
+
+\begin_layout Columns
+
+\size small
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Validar os resultados
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Estimar sua precisão
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Solução existe para $
+\backslash
+varphi=90^
+\backslash
+circ$
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item TGG de anéis de massa pode ser calculado subtraindo duas cascas de
+ $
+\backslash
+Psi_{i+1}$ e $
+\backslash
+Psi_i$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{6cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/spherical_shell.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Implementação Computacional
+\end_layout
+
+\begin_layout FrameSubtitle
+TGG de uma casca esférica
+\end_layout
+
+\begin_layout Standard
+Pela simetria do problema:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*}   
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{xx} &= T_{yy} = - 
+\backslash
+dfrac{1}{2} 
+\backslash
+dfrac{
+\backslash
+partial^2 V}{
+\backslash
+partial r^2}   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{xy} &= T_{yx} = 0   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{xz} &= T_{zx} = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{yz} &= T_{zy} = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+T_{zz} &= 
+\backslash
+dfrac{
+\backslash
+partial^2 V}{
+\backslash
+partial r^2} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Resultados
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout Itemize
+Validação do programa
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Exemplo de TGG de um tesseróide
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Limitações numéricas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.7cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Efeito topográfico
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Validação do programa
+\end_layout
+
+\begin_layout Standard
+Anéis de massa de 
+\begin_inset Formula $\Delta\varphi=5'$
+\end_inset
+
+, 
+\begin_inset Formula $\rho=2\ 670\ kg\ m^{-3}$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta r=1\ 000\ m$
+\end_inset
+
+ e ponto de observação no polo Norte a 250 km de altitude
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggt-cap-at250.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Validação do programa
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{3cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Discretizado em tesseróides de $5'
+\backslash
+ x
+\backslash
+ 5'
+\backslash
+ x
+\backslash
+ 1000m$
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Ordens de QGL ($N_
+\backslash
+varphi = N_
+\backslash
+lambda$) dois, três, quatro e cinco
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{8cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggt-diffs-at250.png
+	lyxscale 20
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Exemplo de TGG de um tesseróide
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Exemplo de TGG de um tesseróide
+\end_layout
+
+\begin_layout Standard
+
+\size scriptsize
+Tesseróide de 
+\begin_inset Formula $1^{\circ}x\ 1^{\circ}x\ 1^{\circ}x\ 10\ km$
+\end_inset
+
+, 
+\begin_inset Formula $\rho=2800\ kg\ m^{-3}$
+\end_inset
+
+, centrado em 
+\begin_inset Formula $40^{\circ}N$
+\end_inset
+
+ e 
+\begin_inset Formula $83^{\circ}W$
+\end_inset
+
+ e observado a 250 km de altitude.
+ 
+\begin_inset Formula $N_{\varphi}=N_{\lambda}=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggtT1x1at250-exemplo.png
+	lyxscale 20
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Limitações numéricas
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Resultados de Ku (1977):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Se a distância entre os nós da QGL for maior que a distância ao ponto de
+ observação
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+O TGG aparenta ser causado por massas pontuais localizadas nos nós
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Este é um artefato numérico da QGL
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Para evitá-lo basta aumentar o número de nós até que a distância fosse menor
+ que a distância até o ponto de observação
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Itemize
+O mesmo acontece com o TGG de um tesseróide?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.5cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Calculado o TGG de um tesseróide de 
+\begin_inset Formula $2^{\circ}x\ 2^{\circ}x\ 10\ km$
+\end_inset
+
+ e 
+\begin_inset Formula $\rho=2800\ kg\text{\ }m^{-3}$
+\end_inset
+
+ para diversas altitudes e ordens
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $N_{\varphi}=N_{\lambda}=2$
+\end_inset
+
+ a 250 km (Maior distância entre os nós 
+\begin_inset Formula $\approx$
+\end_inset
+
+ 128,5 km)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ku2x2at250-o2.png
+	lyxscale 5
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $N_{\varphi}=N_{\lambda}=2$
+\end_inset
+
+ a 100 km (Maior distância entre os nós 
+\begin_inset Formula $\approx$
+\end_inset
+
+ 128,5 km)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggtT2x2at100-o2.png
+	lyxscale 5
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $N_{\varphi}=N_{\lambda}=2$
+\end_inset
+
+ a 50 km (Maior distância entre os nós 
+\begin_inset Formula $\approx$
+\end_inset
+
+ 128,5 km)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggtT2x2at50-o2.png
+	lyxscale 5
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula $N_{\varphi}=N_{\lambda}=10$
+\end_inset
+
+ a 50 km (Maior distância entre os nós 
+\begin_inset Formula $\approx$
+\end_inset
+
+ 33 km)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggtT2x2at50-o10.png
+	lyxscale 5
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Limitações numéricas
+\end_layout
+
+\begin_layout Standard
+
+\size small
+Prisma de mesma massa a 50 km
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/ggtP2x2at50.png
+	lyxscale 5
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Aproximação plana para a Terra:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.2cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Corpos planos
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1^{\circ}$
+\end_inset
+
+ de latitude ou longitude 
+\begin_inset Formula $\approx$
+\end_inset
+
+ 111,11 km
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sistemas locais dos pontos de observação possuem a mesma orientação do sistema
+ local do corpo
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size scriptsize
+Tesseróide de 
+\begin_inset Formula $1^{\circ}x\ 1^{\circ}x\ 10\ km$
+\end_inset
+
+ e 
+\begin_inset Formula $\rho=2800\ kg\text{\ }m^{-3}$
+\end_inset
+
+ calculado a 250 km
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/tess-plano-1.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size small
+Diferença
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/dif-plano-1.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size scriptsize
+Tesseróide de 
+\begin_inset Formula $50^{\circ}x\ 50^{\circ}x\ 10\ km$
+\end_inset
+
+ e 
+\begin_inset Formula $\rho=2800\ kg\text{\ }m^{-3}$
+\end_inset
+
+ calculado a 250 km
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/tess-plano-50.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Diferença da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size small
+Diferença
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/dif-plano-50.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Efeito topográfico
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Efeito topográfico
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{4cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+
+\size footnotesize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Estimar o efeito da topografia da bacia do Parana no TGG a 250 km
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item DEM ETOPO1
+\backslash
+
+\backslash
+[0.3cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Grid de 10'
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item $
+\backslash
+rho = 2700
+\backslash
+ kg
+\backslash
+text{
+\backslash
+ }m^{-3}$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}{8cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/topografia-10min-marca-grid.png
+	lyxscale 20
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Resultados
+\end_layout
+
+\begin_layout FrameSubtitle
+Efeito topográfico
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/leo/doc/usp/tg2/images/topoeffect-10m-tgg.png
+	lyxscale 10
+	scale 37
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Conclusões
+\end_layout
+
+\begin_layout BeginFrame
+Conclusões
+\end_layout
+
+\begin_layout Itemize
+Validação dos resultados
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $T_{xy}$
+\end_inset
+
+e 
+\begin_inset Formula $T_{yy}$
+\end_inset
+
+ se mostraram instáveis
+\end_layout
+
+\begin_layout Itemize
+Era esperado pois existem singularidades nas equações para 
+\begin_inset Formula $\varphi=90^{\circ}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Este é caso limite que deve ser evitado na prática
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Limitações numéricas
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Apresenta o mesmo artefato numérico observado por Ku (1977)
+\end_layout
+
+\begin_layout Itemize
+A ordem da QGL deve ser escolhida para que a distância entre os nós seja
+ menor que a distância até o ponto de observação
+\end_layout
+
+\begin_layout Itemize
+A altitude de 250 km, o TGG de um tesseróide com face de até 2º x 2º pode
+ ser calculado utilizando ordem 2
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Conclusões
+\end_layout
+
+\begin_layout Itemize
+Diferenças da 
+\begin_inset Quotes eld
+\end_inset
+
+Terra plana
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Diferenças de até 30% em 
+\begin_inset Formula $T_{zz}$
+\end_inset
+
+ para um modelo de 
+\begin_inset Formula $50^{\circ}x\ 50^{\circ}x\ 10\ km$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Deve ser levada em conta na modelagem de estruturas extensas
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Efeito topográfico no TGG
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+TGG devido à topografia da mesma ordem de grandeza que o TGG de um tesseróide
+ de 
+\begin_inset Formula $1^{\circ}x\ 1^{\circ}x\ 10\ km$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Deve ser separado do efeito do corpo anômalo na modelagem de dados de TGG
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size giant
+Obrigado
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Referências
+\end_layout
+
+\begin_layout BeginFrame
+Referências
+\end_layout
+
+\begin_layout Itemize
+\noindent
+
+\size tiny
+ASGHARZADEH, M.F.; VON FRESE, R.R.B.; KIM, H.R.; LEFTWICH, T.E.; KIM, J.W.
+ Spherical prism gravity effects by Gauss-Legendre quadrature integration.
+ 
+\series bold
+Geophysics Journal International
+\series default
+, v.
+ 169, p.
+ 1-11, 2007.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+BARRERA-FIGUEROA, V.; SOSA-PEDROZA, J.; LÓPEZ-BONILLA, J.
+ Multiple root finder algorithm for Legendre and Chebyshev polynomials via
+ Newton’s method.
+ 
+\series bold
+Annales Mathematicae et Informaticae
+\series default
+, v.
+ 33, p.
+ 3 – 13, 2006.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+HECK, B.; SEITZ, K.
+ A comparison of the tesseroid, prism and point-mass approaches for mass
+ reductions in gravity field modelling.
+
+\series bold
+ Journal of Geodesy
+\series default
+, v.
+ 81, p.
+ 121 - 136, 2007.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+HILDEBRAND.
+ F.B.
+ 
+\series bold
+Introduction to numerical analysis
+\series default
+.
+ Courier Dover Publications, 2.
+ ed., 1987.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+KU, C.C.
+ A direct computation of gravity and magnetic anomalies caused by 2- and
+ 3-dimensional bodies of arbitrary shape and arbitrary magnetic polarization
+ by equivalent-point methot and a simplified cubic spline.
+ 
+\series bold
+Geophysics
+\series default
+, v.
+ 42, p.
+ 610 - 622, 1977.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+NAGY, D.; PAPP, G.; BENEDEK, J.
+ The gravitational potential and its derivatives for the prism.
+
+\series bold
+ Journal of Geodesy
+\series default
+, v.
+ 74, p.
+ 552 – 560, 2000.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+PRESS, W.H.; FLANNERY, B.P.; TEUKOLSKY, S.A.; VETTERLING, W.T.
+ 
+\series bold
+Numerical Recipes in C: The Art of Scientific Computing
+\series default
+.
+ Cambridge University Press, 2.
+ ed., 1992.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+TSCHERNING, C.C.
+ Computation of the second-order derivatives of the normal potential based
+ on the representation by a Legendre series.
+ 
+\series bold
+Manuscripta Geodaetica
+\series default
+, v.
+ 1, p.
+ 71 – 92, 1976.
+\end_layout
+
+\begin_layout Itemize
+
+\size tiny
+WILD-PFEIFFER, F.
+ A comparison of different mass elements for use in gravity gradiometry.
+ 
+\series bold
+Journal of Geodesy
+\series default
+, v.
+ 82 (10), p.
+ 637 - 653, 2008.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

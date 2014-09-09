@@ -1,0 +1,345 @@
+\chapter{Implementação Computacional}
+
+Este capítulo relata os aspectos computacionais e metodológicos do trabalho
+realizado.
+É discutida aqui a escolha da linguagem de programação para o projeto, os
+algoritmos implementados e os testes de validação do programa desenvolvido.
+
+
+\section{Linguagem de Programação}
+
+O programa desenvolvido neste projeto foi implementado na linguagem Python.
+A escolha desta linguagem foi baseada nas diversas vantagens que a mesma possui
+sobre a linguagem C.
+A principal destas é que o desenvolvimento de um programa em Python é
+muito mais rápido que o de um em C.
+Além disso, outras vantagens importantes da linguagem Python são:
+
+\begin{itemize}
+  \item Sua vasta biblioteca padrão, na qual existem módulos para fazer o
+    processamento dos argumentos de linha de comando, automatizar os testes de
+    integridade das diferentes partes do programa (chamados de Unit Tests),
+    lidar com o sistema de arquivos, etc;
+  \item Suporte para diversos paradigmas de programação, como programação
+    orientada a objetos, programação seqüencial e programação concorrente;
+  \item Pode ser utilizada na forma de scrips;
+  \item Programas escritos em Python podem ser importados em scripts ou outros
+    programas na forma de módulos, o que facilita a reutilização de programas;
+  \item A linguagem Python é interpretada, não compilada como a linguagem C.
+    Logo, programas escritos nela são independentes do sistema operacional;
+\end{itemize}
+
+\indent Por ser interpretada, a linguagem Python possui pior performance que a
+linguagem C.
+No entanto, esta limitação pode ser superada pois a linguagem Python pode ser
+facilmente integrada com a linguagem C.
+As partes do programa que requerem maior performance (conhecidas como
+bottlenecks) podem ser substituídas por rotinas programadas em C sem perder
+todos os outro benefícios que a linguagem Python oferece.
+\\
+\indent O código fonte do programa desenvolvido está hospedado no servidor
+gratuito do Google Code (\texttt{http://code.google.com/p/tesseroids}) como software livre segundo os termos da GNU General
+Public License 3.0. 
+Isso significa que o código do programa pode ser livremente acessado e
+modificado por qualquer pessoa, desde que esta mantenha o código aberto sob a
+mesma licença.
+
+
+
+\section{Implementação Computacional da QGL}
+
+
+A QGL foi implementada na forma de um módulo, denominado \texttt{glq.py}, que
+contem duas classes: \texttt{Abscissas} e \texttt{Weights}.
+Estas classes são as responsáveis por calcular e armazenar os pontos de
+discretização e os pesos utilizados na QGL.
+\\
+\indent A classe \texttt{Abscissas} contem um método para calcular os pontos de
+discretização (nós) da QGL e outro para convertê-los para o intervalo $[a, b]$,
+definido pelos limites de integração.
+Como dito no Capítulo 2, os pontos de discretização são dados pelas raízes
+$\xi_k$ de um polinômio de Legendre.
+Para calcular essas raízes foi implementado um método de Newton modificado para
+ter uma convergência maior (BARRERA-FIGUEROA \textit{et al.}, 2006).
+Segundo este método $k$-ésima raiz do polinômio de Legendre $P_N(\xi)$ de ordem
+$N$ pode ser calculada através de um processo iterativo:
+
+\begin{equation}
+  \xi_{k, n+1} = \xi_{k,n} -
+    \dfrac{P_N(\xi_{k,n})}{P_N'(\xi_{k,n}) - P_N(\xi_{k,n})
+    \displaystyle\sum\limits_{i=1}^{k-1} \dfrac{1}{\xi_{k,n} - \xi_i}}
+\label{k-esima-raiz}
+\end{equation}
+
+\noindent onde os $\xi_i$ são as $k-1$ raízes que já foram calculadas.
+Esse processo é terminado quando
+$\varepsilon = |\xi_{k,n+1} - \xi_{k,n}| \leqslant 10^{-15}$ ou quando um
+número máximo de $10^4$ iterações for alcançado.
+Os chutes iniciais para o processo iterativo foram calculados segundo
+Press \textit{et al.} (1992):
+
+\begin{equation}
+  \xi_{k,0} = \dfrac{\cos\left(\pi k - \frac{\pi}{4}\right)}{N+\frac{1}{2}}
+\label{chute-inicial}
+\end{equation}
+
+Como as raízes dos polinômios de Legendre estão contidas no intervalo $[-1, 1]$,
+elas devem ser convertidas para o intervalo de integração $[a, b]$ antes de serem
+utilizadas.
+Esta conversão foi feita utilizando a seguinte equação:
+
+\begin{equation}
+  x_k  = \dfrac{(b-a)}{2} \xi_k + \dfrac{(a+b)}{2}
+\label{scale-factor}
+\end{equation}
+
+A classe \texttt{Weights} calcula os pesos associados a uma determinada instância
+da classe \texttt{Abs\-cis\-sas} utilizando as equações \eqref{pesos} a
+\eqref{rel-recur2}.
+
+
+
+
+\section{Cálculo do TGG de Tesseróides}
+
+
+As classes encarregadas de calcular as seis componentes do TGG estão contidas no
+módulo \texttt{tesseroidgravity.py}.
+Este módulo contém sete classes, sendo a principal delas a classe
+\texttt{Tesseroid\-Gravity}.
+Esta classe contém o método \texttt{calculate} que utiliza a QGL para integrar uma função
+virtual \texttt{kernel}, cuja implementação é feita nas classes
+\texttt{Tesseroid\-Gxx}, \texttt{Tesseroid\-Gxy}, \texttt{Tesseroid\-Gxz},
+\texttt{Tesseroid\-Gyy}, \texttt{Tesseroid\-Gyz} e \texttt{Tesseroid\-Gzz} que são
+subclasses de \texttt{Tesseroid\-Gravity}.
+A função \texttt{kernel} de cada subclasse corresponde ao integrando da respectiva
+componente do TGG.
+Assim, cada subclasse utiliza o mesmo método de \texttt{Tesseroid\-Gravity} para
+calcular uma componente do TGG para todos os pontos de uma grade e para todos os
+tesseróides de um modelo de entrada.
+Nos cálculos foram utilizados os valores de constante gravitacional
+$G = 6,673 \times 10^{-11}\ m^3kg^{-1}s^{-2}$ e raio da Terra esférica
+$R = 6\ 378\ 137\ m$ (WILD-PFEIFFER, 2008).
+Como todos os cálculos são efetuados em unidades do S.I., o resultado deve ser
+convertido para E\"otvos, que é a unidade mais usual.
+O fator de conversão é $1\ \text{s}^{-2} = 10^9\ \text{E\"otvos}$.
+\\
+\indent O método \texttt{calculate} de \texttt{Tesseroid\-Gravity} utiliza a integração
+analítica na direção radial e integração numérica da integral dupla resultante
+(WILD-PFEIFFER, 2008).
+Esta metodologia apresenta melhor performance que o cálculo do TGG utilizando
+somente integração numérica com a QGL 3D.
+Porém, as integrais duplas apresentam uma singularidade quando o ângulo
+$\psi$ entre o ponto de observação e o ponto de integração é igual a zero.
+Essa singularidade não está presente nas integrais triplas.
+\\
+\indent No contexto da QGL a singularidade ocorre se o ponto de observação
+possuir mesma latitude e longitude que um dos pontos de discretização (nós).
+Computacionalmente, essa singularidade provoca um ``erro de divisão por zero''
+que termina o programa.
+Para contornar este problema, nos pontos de observação onde este erro ocorre o
+TGG passa a ser calculado utilizando a QGL 3D, evitando a singularidade.
+
+
+
+\section{Cálculo do TGG de Prismas Retangulares}
+
+O cálculo do TGG utilizando a distribuição de massa em prismas retangulares foi
+implementada para estimar o erro da aproximação plana para a Terra esférica.
+Para isso, cada tesseróide foi aproximado por um prisma retangular com o mesmo
+volume, densidade e altura do tesseróide.
+Assumindo que o tesseróide é muito pequeno quando comparado à Terra
+($\sin\Delta\varphi = \Delta\varphi$) e que sua altura é muito menor que sua
+distância até a origem do sistema global ($\Delta r \ll r_1$), as dimensões do
+prisma retangular são dadas por (WILD-PFEIFFER, 2008):
+
+
+\begin{subequations}
+\begin{align}
+  \Delta x &= \dfrac{r_1 + r_2}{2} \Delta \varphi
+  \label{tess2prism-dx}
+\\[4mm]
+  \Delta y &= \dfrac{r_1 + r_2}{2} \cos \left(\dfrac{\varphi_1 + \varphi_2}{2}
+    \right) \Delta \lambda
+  \label{tess2prism-dy}
+\\[4mm]
+  \Delta z &= \Delta r
+  \label{tess2prism-dz}
+\end{align}
+\end{subequations}
+
+\indent As fórmulas analíticas de $V$ e suas derivadas para um prisma retangular
+de densidade constante $\rho$ são dadas em Nagy \textit{et al.} (2000).
+Nesta formulação foi assumida uma aproximação plana para a Terra.
+Conseqüentemente o sistema local do prisma tem a mesma orientação do sistema
+local do ponto de observação.
+Porém, se o prisma retangular, ou um conjunto deles, for utilizado para
+representar um segmento esférico da Terra, o sistema local do ponto de
+observação não terá a mesma orientação do sistema local do prisma
+(Figura \ref{coord-sys}).
+Logo, neste caso é necessário converter o TGG para o sistema local do ponto de
+observação utilizando a matriz de transformação apresentada na equação
+\eqref{tranf-QtoP}.
+
+\begin{equation}
+  T^{L_{ob}} = R\ T^{L_{pr}} R^T
+\label{tgg-transf}
+\end{equation}
+
+\noindent onde $T^{L_{ob}}$ é o TGG no sistema local do ponto de observação e
+$T^{L_{pr}}$ é o TGG no sistema local do prisma.
+\\
+\indent Para utilizar as fórmulas de Nagy \textit{et al.} (2000) é necessário
+conhecer também as coordenadas do ponto de observação no sistema local do prisma
+(Figura \ref{coord-sys}).
+Este sistema difere do sistema utilizado em Nagy \textit{et al.} (2000) somente
+no sentido da componente $z$ (Figura \ref{nagy-cood-sys}).
+Assim, a transformação das coordenadas do ponto de observação do sistema global
+para o sistema local do prisma pode ser feita utilizando a equação
+\eqref{tranf-GtoP} e invertendo o sinal da componente $z$.
+Nessa equação, $\mathbf{e}^{L_P}_Q$ passa a representar o vetor posição do ponto
+de observação no sistema local do prisma, $\mathbf{e}^{G}_Q$ o vetor posição do
+ponto de observação no sistema global e $\mathbf{e}^{G}_Q$ o vetor posição da
+origem do sistema local do prisma no sistema global.
+Por convenção, a origem do sistema local do prisma está localizada no centro de
+sua face superior.
+
+
+
+
+\section{Cálculo do TGG de uma Casca Esférica}
+
+
+Para validar os resultados obtidos com o programa computacional implementado, é
+necessário compará-los com valores obtidos através de fórmulas analíticas.
+Um modelo 3D para o qual existe uma fórmula analítica é uma casca esférica com
+densidade e espessura constantes (Figura \ref{sph-cap}).
+O potencial desta casca esférica é dado por:
+
+\begin{equation}
+  V \left(r, \varphi, \lambda \right) = G \rho
+    \int\limits_{r_1}^{r_2}
+    \int\limits_{\varphi_c}^{\frac{\pi}{2}}
+    \int\limits_{0}^{{2\pi}}
+    \dfrac{1}{l}\ r'^2 \cos\varphi'\ d\lambda'\ d\varphi'\ d r'
+\label{sphcap-pot}
+\end{equation}
+
+\indent Se o ponto de observação estiver localizado ao longo do eixo $Z$ do
+sistema global, a equação \eqref{sphcap-pot} resulta em (HECK; SEITZ, 2007):
+
+\begin{multline}
+ V \left(r, \varphi=\frac{\pi}{2}, \lambda=0 \right) = 2 \pi G \rho
+  \Biggl\{
+    \dfrac{l_c^3}{3r}
+    + \dfrac{r^2 \sin\varphi_c \cos^2\varphi_c}{2}\ln(l_c + r' - r \sin\varphi_c)
+    \\    
+    + \dfrac{r'^3}{3r} - \dfrac{r'^2}{2} 
+     + \dfrac{l_c \sin \varphi_c}{2} (r' - r \sin \varphi_c)
+  \Biggr\} \Biggr\rvert^{r'=r_2}_{r'=r_1}
+\label{sphcap-pot-polo}
+\end{multline}
+
+\noindent onde
+
+\[
+  l_c = \sqrt{r'^2 + r^2 - 2rr'\sin\varphi_c}
+\]
+
+\indent A partir da equação \eqref{sphcap-pot-polo} é possível obter o TGG
+causado pela casca esférica.
+Devido à simetria do modelo e à localização do ponto de observação,
+as equações \eqref{txx-esf} a \eqref{tzz-esf} podem ser simplificadas para
+(WILD-PFEIFFER, 2008):
+
+\begin{subequations}
+\begin{align}
+  T_{xx} &= T_{yy} = - \dfrac{1}{2} \dfrac{\partial^2 V}{\partial r^2}
+  \label{sphcap-txx-tyy}
+  \\
+  T_{xy} &= T_{yx} = 0
+  \label{sphcap-txy}
+  \\
+  T_{xz} &= T_{zx} = 0
+  \label{sphcap-txz}
+  \\
+  T_{yz} &= T_{zy} = 0
+  \label{sphcap-tyz}
+  \\
+  T_{zz} &= \dfrac{\partial^2 V}{\partial r^2}
+  \label{sphcap-tzz}
+\end{align}
+\end{subequations}
+
+\noindent onde a segunda derivada de $V$ na direção radial é dada por:
+
+\begin{multline}
+  \dfrac{\partial^2 V}{\partial r^2} = 2 \pi G \rho \Biggl\{
+    \dfrac{2 l_c^3}{3 r^3}
+    - \dfrac{l_c}{r^2}(r - 2r' \sin\varphi_c)
+    + \dfrac{r - r' \sin\varphi_c}{l_c}
+    - \dfrac{r' \sin\varphi_c}{r l_c}(r - r'\sin\varphi_c)
+  \\[4mm]
+    - \dfrac{\sin^2\varphi_c}{2l_c}(r - r'\sin\varphi_c)
+    + \dfrac{2 r'^3}{3 r^3}
+  \\[4mm]
+    + \dfrac{\sin\varphi_c}{2} \left[
+      \dfrac{r' - 2r\sin\varphi_c + r' \sin^2\varphi_c}{l_c}
+      - \dfrac{(r - r'\sin\varphi_c)^2(r' - r\sin\varphi_c)}{l_c^3}
+    \right]
+  \\[4mm]
+    + \sin\varphi_c \cos^2\varphi_c \left[
+      \ln(l_c + r' - r \sin\varphi_c) + \dfrac{r}{l_c + r' - r \sin\varphi_c}
+      \left( \dfrac{r - r'\sin\varphi_c}{l_c} - \sin\varphi_c \right)
+    \right]
+  \\[4mm]
+    + \dfrac{\sin\varphi_c \cos^2\varphi_c}{2 l_c (l_c + r' - r \sin\varphi_c)}
+    \left[
+      3r^2 - 2 r l_c \sin\varphi_c -
+      \dfrac{r^2}{l_c}\sin\varphi_c(r - r'\sin\varphi_c) -
+      2r r' \sin\varphi_c
+    \right]
+  \\[4mm]
+    - \dfrac{\sin\varphi_c \cos^2\varphi_c r^2( r- (l_c + r') \sin\varphi_c)}
+    {2 l_c^2 (l_c + r' - r \sin\varphi_c)^2}  \Biggl[
+      2(r - r'\sin\varphi_c)
+  \\[4mm]
+      + \dfrac{r'}{l_c}(r - r'\sin\varphi_c)
+      - l_c \sin\varphi_c
+      - \dfrac{r \sin\varphi_c}{l_c}(r - r'\sin\varphi_c) \Biggr]
+    \Biggr\}
+    \Biggr\rvert^{r'=r_2}_{r'=r_1}
+\label{sphcap-seg-deriv}
+\end{multline}
+
+\indent A equação \eqref{sphcap-seg-deriv} pode ser utilizada para calcular o
+TGG causado por um anel de massa com $\Delta\varphi = \varphi_{i+1} - \varphi_i$
+subtraindo o efeito de duas cascas esféricas de raio esférico
+$\varphi_c = \varphi_{i+1}$ e $\varphi_c = \varphi_{i}$ (Figura \ref{sph-cap}).
+Assim é possível analisar como a distância entre o modelo e o ponto de
+observação afeta o erro do programa computacional desenvolvido.
+
+
+
+% FIGURAS
+\newpage
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.35]{../images/prism_coord_sys.png}
+  \caption{\small Sistemas de coordenadas utilizados em Nagy \textit{et al.} (2000).
+    O sistema (x,y,z) com origem no ponto de observação P é o utilizado na
+    formulação. Para realizar os cálculos, é necessário conhecer as coordenadas
+    do ponto P no sistema local do prisma ABCDEFGH.
+    Fonte Nagy \textit{et al.} (2000)}
+  \label{nagy-cood-sys}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.35]{../images/spherical_shell.png}
+  \caption{\small Anel de massa obtido subtraindo as cascas esféricas de raio esférico
+    $\psi_{i+1}$ e $\psi_i$ ($\psi = 90^\circ - \varphi_c$). O ponto de
+    observação P está localizado ao longo do eixo $Z$ global.
+    Fonte Heck e Seitz (2007).}
+  \label{sph-cap}
+\end{figure}

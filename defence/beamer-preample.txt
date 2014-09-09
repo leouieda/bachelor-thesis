@@ -1,0 +1,20 @@
+\usetheme{default} 
+%\usetheme{Madrid} 
+%\usetheme{Rochester}
+%\usepackage{avant}
+%\usepackage{helvet}
+
+\setbeamercolor{normal text}{fg=white,bg=black} 
+%\setbeamercolor{normal text}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+%\setbeamercolor{structure}{fg=black}
+\xdefinecolor{mycolor}{rgb}{0.96,1.00,0.50}
+\setbeamercolor{structure}{fg=mycolor}
+%\setbeamercolor{title}{fg=white}
+\usefonttheme{structurebold}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{blackboard.jpg}}
+
+
+%\usepackage{natbib}
+

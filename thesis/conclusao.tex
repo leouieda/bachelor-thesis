@@ -1,0 +1,42 @@
+\chapter{Conclusão}
+
+O programa computacional implementado na linguagem Python é confiável pois
+possui ``unit tests'' e ``testes de integração'' que verificam automaticamente
+a funcionalidade de cada parte do programa e seu funcionamento como um todo.
+As funções e classes implementadas poderão ser facilmente reutilizadas em outros
+programas devido à modularidade inerente na linguagem Python.
+Além disso, as singularidades presentes na metodologia de Wild-Pfeiffer (2008)
+foram efetivamente contornadas utilizando a integração numérica 3D nos pontos
+onde ocorrem.
+\\
+\indent Foi observado que o TGG de um tesseróide calculado utilizando a QGL
+apresenta o mesmo artefato numérico observado por Ku (1977).
+Por isso, a ordem da QGL deve ser escolhida de tal forma que a distância entre
+os nós seja menor que a distância até o ponto de observação.
+Isso significa que, a altitude de 250 km, o TGG de um tesseróide com face de
+até $2^\circ \times 2^\circ$ pode ser calculado utilizando ordem dois.
+\\
+\indent No caso dos anéis de massa com ponto de observação em
+$\varphi = 90^\circ$, o programa desenvolvido apresentou resultados com precisão
+semelhante aos apresentados em Wild-Pfeiffer (2008).
+As componentes $T_{xy}$ e $T_{yy}$ se mostraram instáveis, o que era
+esperado pois existem singularidades nas equações para este ponto de observação.
+Este é um caso limite que deve ser evitado na prática para garantir resultados
+precisos.
+\\
+\indent A comparação entre a modelagem com tesseróides e uma aproximação plana
+para a Terra esférica mostrou diferenças de até 30\% na componente $T_{zz}$
+para um modelo de $50^\circ \times 50^\circ \times 10\ km$.
+Esta é um diferença considerável que deve ser levada em conta na modelagem de
+estruturas extensas.
+\\
+\indent O TGG devido à topografia da região da bacia do Parana possui a mesma
+ordem de grandeza nas amplitudes das componentes do TGG de um tesseróide de
+$1^\circ \times 1^\circ \times 10\ km$.
+Isso mostra que o efeito topográfico deve ser removido dos dados que serão
+observados na missão GOCE a fim de isolar o efeito dos corpos anômalos em
+subsuperfície.
+
+  
+  
+  

@@ -1,0 +1,117 @@
+% TG2 - Leonardo Uieda
+% "Clculo do tensor gradiente da gravidade usando tesserides"
+\documentclass[12pt,a4paper,titlepage]{report}
+
+% Para fazer o contador de figuras ser por documento
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% Para portugues
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+
+% Melorar
+\usepackage{booktabs} % for making better tables
+\usepackage{graphicx} % For inserting figures
+% \usepackage[draft]{graphicx} % Rascunho
+\usepackage{amssymb,amsmath} % Mathematical Symbols and fonts
+
+\usepackage{natbib}
+
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=2.5cm}
+
+
+% Make the fancy header
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\thechapter\ #1}{}}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\thesection\ #1}}
+\fancyhf{} % delete current header and footer
+\rhead{\bfseries\thepage}
+\lhead{\bfseries\leftmark}
+\cfoot{}
+\addtolength{\headheight}{15.5pt} % space for the rule
+\fancypagestyle{plain}{
+  \fancyfoot{} 
+  \renewcommand{\headrulewidth}{0pt} % and the line
+  \rhead{\bfseries\thepage}
+  \lhead{}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\renewcommand*\@makechapterhead[1]{%
+%   \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \huge\bfseries \thechapter\hspace{0.5cm}
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+  \input{./capa.tex}
+
+  \input{./folha-de-rosto.tex}
+
+  \pagenumbering{roman}
+  \singlespacing
+
+  \thispagestyle{plain}
+  \input{./agradecimentos.tex}
+
+  \newpage
+
+  \thispagestyle{plain}
+  \input{./resumo.tex}
+
+  \newpage
+
+  \thispagestyle{plain}
+  \input{./abstract.tex}
+
+  \newpage
+
+  \tableofcontents
+  \listoffigures
+  \newpage
+
+  \pagenumbering{arabic}
+  \onehalfspacing
+
+  % Introduo
+  \input{introducao.tex}
+
+  % Fundamentos
+  \input{fundamentos-teoricos.tex}
+
+  % Implementao
+  \input{implementacao-computacional.tex}
+
+  % Resultados
+  \input{resultados.tex}
+
+  % Concluso
+  \input{conclusao.tex}
+
+
+
+  % Referncias
+  \input{referencias.tex}
+
+
+\end{document}

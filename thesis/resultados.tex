@@ -1,0 +1,378 @@
+\chapter{Resultados}
+
+
+
+\section{Validação do programa desenvolvido}
+
+Com o objetivo de testar se o programa computacional desenvolvido está
+funcionando corretamente, foi feita a comparação entre os resultados previstos
+analiticamente por um anel de massa (Wild-Pfeiffer, 2008) com aqueles previstos
+pela aproximação por tesseróides.
+\\
+\indent A Figura \ref{sphcap-tgg-diag} apresenta as componentes não nulas do TGG causado
+por anéis de massa de $\Delta \varphi = 5'$, $\rho = 2\ 670\ kg\ m^{-3}$,
+$\Delta r = 1\ 000\ m$ e ponto de observação no pólo Norte a 250 km de altitude.
+Para comparar estes resultados com o do programa desenvolvido, cada anel foi
+discretizado em tesseróides de  $5' \times 5' \times 1\ km$ e foram utilizadas
+ordens de QGL ($N_\varphi = N_\lambda$) dois, três, quatro e cinco, segundo
+Wild-Pfeiffer (2008).
+As diferenças entre os dois resultados estão apresentados na Figura
+\ref{sphcap-tgg-dif} e nas Tabelas \ref{tabela-diff-cap-tess-diag} e
+\ref{tabela-diff-cap-tess-nondiag}.
+\\
+\indent As componentes $T_{xx}$ e $T_{zz}$ apresentam diferenças de aproximação
+máximas da ordem de $10^{-9}$ e $10^{-8}$ E\"otvos, respectivamente, para
+$N_\varphi = N_\lambda = 2$.
+Essas diferenças são $10^7$ vezes menores do que os valores previstos
+pelas formulas analíticas.
+Para $N_\varphi = N_\lambda > 2$, as diferenças máximas diminuem para $10^{-12}$
+E\"otvos.
+Para anéis abaixo de $\varphi_c = 85^\circ$ a ordem da QGL deixa de influenciar
+significantemente a diferença.
+Já as componentes $T_{xz}$ e $T_{yz}$ apresentam diferenças máximas da ordem de
+$10^{-15}$ E\"otvos, independente de $N_\varphi$ e $N_\lambda$.
+Nestas componentes a diferença estabiliza para $\varphi_c < 85^\circ$.
+\\
+\indent As componentes $T_{xy}$ e $T_{yy}$ apresentam diferenças máximas da
+ordem de $10^{-3}$ E\"otvos, para todos os valores de $N_\varphi$ e $N_\lambda$
+utilizados.
+Essas componentes apresentam comportamento crescentemente instável com a
+variação de $\varphi_c$, independente da ordem da QGL.
+Esta instabilidade era esperada pois quando $\varphi = \pm 90^\circ$ o termo
+$\cos^{-2}\varphi$ das equações \eqref{txy-esf} e \eqref{tyy-esf} é
+numericamente instável.
+Idealmente, $\cos(\pm90^\circ)=0$ e geraria um erro computacional de ``divisão por
+zero'' que terminaria o programa.
+Porém, o cosseno é aproximado por uma série e
+$\cos^{-2}(\pm90^\circ)\approx10^{32}$, gerando os valores altos nas diferenças
+observadas na Figura \ref{sphcap-tgg-dif}.
+Este mesmo efeito não é observado na componente $T_{yz}$ (equação
+\eqref{tyz-esf}) pois o termo $\cos^{-1}\varphi$ é cancelado quando multiplicado
+pelo termo $\cos\varphi$ presente em $\frac{\partial^2 V}{\partial r \partial\lambda}$ e
+$\frac{\partial V}{\partial\lambda}$.
+
+
+
+\section{Exemplo do TGG causado por um tesseróide}
+    
+O programa desenvolvido foi utilizado para calcular o TGG causado por um
+tesseróide de $1^\circ \times 1^\circ \times 10\ km$,
+$\rho = 2\ 800\ kg\ m^{-3}$, centrado em $40^\circ \text{N}$ e
+$83^\circ \text{W}$ e observado a 250 km de altitude, como em  Asgharzadeh
+\textit{et al.} (2007).
+A ordem de QGL utilizada foi $N_\varphi = N_\lambda = 2$, enquanto em
+Asgharzadeh \textit{et al.} (2007) foi utilizada QGL 3D com ordem
+$N_\varphi = N_\lambda = 8$ e $N_r = 2$.
+O resultado deste cálculo está apresentado na Figura \ref{vonfrese-tgg} e é
+semelhante ao apresentado em Asgharzadeh \textit{et al.} (2007) tanto em forma
+como em magnitude.
+Isto serve para validar resultado do programa desenvolvido em um caso
+diferente do dos anéis de massa com ponto de observação localizado no pólo.
+
+
+
+\section{Limitações Numéricas}
+
+Ku (1977) observou que se a distância entre os nós da QGL for maior que a
+distância ao ponto de observação, o TGG aparenta ser causado por massas pontuais
+localizadas nos nós.
+Este é um artefato numérico da QGL que foi observado para o caso da componente
+vertical da aceleração da gravidade.
+Para que esse artefato não ocorra, Ku (1977) propôs aumentar o número de nós até
+que a distância entre os mesmos fosse menor que a distância até o ponto de
+observação.
+\\
+\indent Para verificar se o artefato observado por Ku (1977) também ocorre com o
+TGG, o mesmo foi calculado para um tesseróide de
+$2^\circ \times 2^\circ \times 10\ km$ e densidade $\rho = 2\ 800\ kg\ m^{-3}$ a
+diversas altitudes.
+A Figura \ref{tgg-ku-250} mostra o TGG calculado a 250 km de altitude utilizando
+$N_\varphi = N_\lambda = 2$.
+Neste caso, a distância entre dois nós adjacentes é de aproximadamente 128,5 km.
+Nota-se que o TGG possui forma semelhante ao apresentado na Figura
+\ref{vonfrese-tgg}.
+No entanto, quando o cálculo é efetuado a 100 km de altitude, a componente
+$T_{zz}$ aparenta ser causada por massas pontuais localizadas nos nós (Figura
+\ref{tgg-ku-100}).
+Esse efeito pode ser claramente observado em todas as componentes quando o TGG é
+calculado a 50 km de altitude (Figura \ref{tgg-ku-50-o2}).
+\\
+\indent Se o número de nós for aumentando para $N_\varphi = N_\lambda = 10$,
+a distância entre dois nós adjacentes diminui para aproximadamente 33 km.
+Pode ser notado na Figura \ref{tgg-ku-50-o10} que o TGG calculado a 50 km de
+altitude com esse número de nós não apresenta ser causado por massas pontuais.
+De fato, o mesmo se assemelha ao TGG causado por um prisma que aproxima o
+tesseróide como descrito na Seção 3.4 (Figura \ref{tgg-ku-50-prisma}).
+
+
+
+\section{Analise numérica  da aproximação plana sobre o TGG}
+
+A aproximação plana para a Terra esférica geralmente consiste em aproximar um corpo curvo
+por um corpo plano e efetuar a computação em uma grade também plana.
+Isto significa assumir que os sistemas locais dos pontos de observação possuem a
+mesma orientação do sistema local do corpo plano e que $1^\circ$ de latitude ou
+longitude equivale a 111,11 km.
+A diferença causada no TGG por essa aproximação foi quantificada subtraindo o
+TGG causado por um tesseróide do causado por um prisma retangular de mesma massa,
+calculado utilizando a aproximação descrita acima.
+\\
+\indent A diferença calculada para um tesseróide de
+$1^\circ \times 1^\circ \times 10\ km$ e $\rho = 2\ 800\ kg\ m^{-3}$ está
+apresentada na Figura \ref{tgg-dif1x1}.
+As diferenças chegam a aproximadamente 7\% na componente $T_{xy}$, porém não
+passam de 0.5\% na componente $T_{zz}$.
+Estas diferenças são mínimas e geralmente são ignoradas na modelagem de estruturas
+pequenas.
+Porém, quando o modelo é um tesseróide de
+$50^\circ \times 50^\circ \times 10\ km$, as diferenças chegam a aproximadamente
+30\% na componente $T_{zz}$ e aproximadamente 5\% na componente $T_{xy}$
+(Figura \ref{tgg-dif50x50}).
+Esta é uma diferença significativa e deve ser levada em conta na modelagem de
+estruturas extensas.
+
+
+
+
+\section{Efeito topográfico}
+
+Os dados de TGG que serão obtidos pelo satélite GOCE incluirão o efeito
+gravitacional da topografia.
+Neste trabalho foi feita uma primeira estimativa da amplitude deste efeito sobre
+o TGG utilizando o programa computacional desenvolvido.
+\\
+\indent O efeito que as massas topográficas da região da bacia do Paraná exercem
+sobre as componentes do TGG foi calculado utilizando o
+modelo digital ETOPO1 (AMANTE; EAKINS, 2009).
+Para isso, foi gerado um modelo de tesseróides a partir de uma grade de
+topografia de $10' \times 10'$ (Figura \ref{topografia}).
+A densidade utilizada foi de $2\ 670\ kg\ m^{-3}$ e a ordem da QGL
+$N_\varphi = N_\lambda = 2$.
+O TGG foi calculado na região marcada pelo retângulo vermelho na Figura
+\ref{topografia} e o resultado está apresentado na Figura \ref{tgg-topografia}.
+Observa-se que as amplitudes das componentes do TGG calculado possuem a mesma
+ordem de grandeza das amplitudes das componentes do TGG gerado pelo tesseróide
+mostrado na Figura \ref{vonfrese-tgg}.
+Este tesseróide poderia representar uma anomalia de densidade situada na crosta
+superior.
+Logo, o efeito topográfico deve ser removido do TGG total medido com a
+finalidade de isolar o efeito gravitacional causado por anomalias de densidade
+situadas na parte mais interna da Terra.
+
+
+
+
+% FIGURAS E TABELAS
+\newpage
+\begin{table}[!htb]
+    \begin{center}
+    \begin{normalsize}
+    \begin{tabular}{c c c c}
+        \toprule
+           &  \multicolumn{3}{c}{Diferenças Máximas [E\"otvos]}\\
+        \cmidrule{2-4}
+        $N_\varphi = N_\lambda$ & $T_{xx}$ & $T_{yy}$ & $T_{zz}$\\
+        \midrule
+        2 & $6.4624 \times 10^{-9}$ & $2.7928 \times 10^{-3}$ & $1.2925 \times 10^{-8}$\\
+        3 & $4.2351 \times 10^{-12}$ & $2.2529 \times 10^{-3}$ & $9.2808 \times 10^{-12}$\\
+        4 & $4.5904 \times 10^{-12}$ & $2.2541 \times 10^{-3}$ & $9.0402 \times 10^{-12}$\\
+        5 & $4.5907 \times 10^{-12}$ & $2.3230 \times 10^{-3}$ & $8.8367 \times 10^{-12}$\\
+        \bottomrule
+    \end{tabular}
+    \end{normalsize}
+    \end{center}
+    \caption{\small Diferenças máximas nas componentes diagonais do TGG entre os
+      valores previstos pela
+      aproximação por tesseróides (programa computacional desenvolvido) e
+      valores previstos pela fórmula analítica de anéis de massa de
+      $\Delta \varphi = 5'$, $\rho = 2\ 670\ kg\ m^{-3}$ e
+      $\Delta r = 1\ 000\ m$. Cada anel foi discretizado em tesseróides de
+      $5' \times 5' \times 1\ km$. $N_\varphi$ e $N_\lambda$ são a ordem da QGL
+      nas direções latitudinal e longitudinal, respectivamente.}
+    \label{tabela-diff-cap-tess-diag}
+\end{table}
+
+\begin{table}[!htb]
+    \begin{center}
+    \begin{normalsize}
+    \begin{tabular}{c c c c}
+        \toprule
+           &  \multicolumn{3}{c}{Diferenças Máximas [E\"otvos]}\\
+        \cmidrule{2-4}
+        $N_\varphi = N_\lambda$ & $T_{xy}$ & $T_{xz}$ & $T_{yz}$\\
+        \midrule
+        2 & $1.5994 \times 10^{-3}$ & $6.0564 \times 10^{-15}$ & $2.7231 \times 10^{-15}$\\
+        3 & $1.4357 \times 10^{-3}$ & $6.0744 \times 10^{-15}$ & $2.7637 \times 10^{-15}$\\
+        4 & $1.0552 \times 10^{-3}$ & $5.9915 \times 10^{-15}$ & $2.7706 \times 10^{-15}$\\
+        5 & $8.7854 \times 10^{-4}$ & $5.9918 \times 10^{-15}$ & $2.7366 \times 10^{-15}$\\
+        \bottomrule
+    \end{tabular}
+    \end{normalsize}
+    \end{center}
+    \caption{\small Diferenças máximas nas componentes não-diagonais do TGG
+      entre os valores previstos pela
+      aproximação por tesseróides (programa computacional desenvolvido) e
+      valores previstos pela fórmula analítica de anéis de massa de
+      $\Delta \varphi = 5'$, $\rho = 2\ 670\ kg\ m^{-3}$ e
+      $\Delta r = 1\ 000\ m$. Cada anel foi discretizado em tesseróides de
+      $5' \times 5' \times 1\ km$. $N_\varphi$ e $N_\lambda$ são a ordem da QGL
+      nas direções latitudinal e longitudinal, respectivamente.}
+    \label{tabela-diff-cap-tess-nondiag}
+\end{table}
+
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/ggt-cap-at250.png}
+  \caption{\small Componentes diagonais do TGG causado por anéis de massa de
+    $\Delta\varphi = 5'$, $\rho = 2\ 670\ kg\ m^{-3}$, $\Delta r = 1\ 000\ m$
+    e ponto de observação no pólo Norte a $250\ km$ de altitude. $\varphi_c$ é
+    a latitude do limite Sul do anel.}
+  \label{sphcap-tgg-diag}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/ggt-diffs-at250.png}
+  \caption{\small Diferença entre o TGG calculado pelo programa desenvolvido e o
+    resultado analítico para anéis de massa de $\Delta\varphi = 5'$,
+    $\rho = 2\ 670\ kg\ m^{-3}$, $\Delta r = 1\ 000\ m$. Cada anel foi
+    discretizado em tesseróides de $5'\times5'\times1000\ m$. $N_\varphi$ e
+    $N_\lambda$ são a ordem da QGL nas direções latitudinal e longitudinal,
+    respectivamente.}
+  \label{sphcap-tgg-dif}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.65]{../images/ggtT1x1at250-exemplo.png}
+  \caption{\small TGG causado por um tesseróide de
+    $1^\circ \times 1^\circ \times 10\ km$ e densidade $2\ 800\ kg\ m^{-3}$,
+    observado a $250\ km$ de altitude. O tesseróide está centrado em
+    $40^\circ \text{N}$ e $83^\circ \text{W}$. A ordem de QGL utilizada foi
+    $N_\varphi = N_\lambda = 2$. Este resultado é semelhante ao apresentado
+    em Asgharzadeh \textit{et al.} (2007). As bordas do tesseróide estão
+    marcadas em preto no centro dos mapas.}
+  \label{vonfrese-tgg}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.67]{../images/ku2x2at250-o2.png}
+  \caption{\small TGG causado por um tesseróide de
+    $2^\circ \times 2^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    calculado a $250\ km$ de altitude. A ordem utilizada foi
+    $N_\varphi = N_\lambda = 2$. As bordas do tesseróide estão marcadas em preto
+    e os símbolos $+$ são os nós da QGL. A distância entre dois nós adjacentes
+    é de aproximadamente $128,5\ km$.}
+  \label{tgg-ku-250}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.67]{../images/ggtT2x2at100-o2.png}
+  \caption{\small TGG causado por um tesseróide de
+    $2^\circ \times 2^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    calculado a $100\ km$ de altitude. Quando a distância entre os nós é maior
+    que a distância ao ponto de observação, o TGG calculado aparenta ser causado
+    por massas pontuais localizadas nos nós, como pode ser observado claramente
+    na componente $T_{zz}$.}
+  \label{tgg-ku-100}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.67]{../images/ggtT2x2at50-o2.png}
+  \caption{\small TGG causado por um tesseróide de
+    $2^\circ \times 2^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    calculado a $50\ km$ de altitude. Neste caso é possível notar que todas as
+    componentes aparentam ser causadas por massas pontuais localizadas nos nós.}
+  \label{tgg-ku-50-o2}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.67]{../images/ggtT2x2at50-o10.png}
+  \caption{\small TGG causado por um tesseróide de
+    $2^\circ \times 2^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    calculado a $50\ km$ de altitude.  A ordem utilizada foi
+    $N_\varphi = N_\lambda = 10$ e distância máxima entre dois nós adjacentes é
+    de aproximadamente $33\ km$. Como a distância entre os nós é menor que a
+    distância ao ponto de observação, o TGG calculado não aparenta ser devido a
+    massas pontuais localizadas nos nós e sim a um corpo volumétrico
+    (tesseróide).}
+  \label{tgg-ku-50-o10}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.67]{../images/ggtP2x2at50.png}
+  \caption{\small TGG causado por um prisma retangular que aproxima o tesseróide de
+    $2^\circ \times 2^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    calculado a $50\ km$ de altitude. As bordas do prisma estão marcadas em
+    branco.}
+  \label{tgg-ku-50-prisma}
+\end{figure}
+
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/tess-plano-1.png}
+  \caption{\small TGG causado por um tesseróide de
+    $1^\circ \times 1^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$,
+    e $N_\varphi = N_\lambda = 2$ calculado a $250\ km$ de altitude.}
+  \label{tgg-tess1x1}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/dif-plano-1.png}
+  \caption{\small Diferença entre o TGG causado pelo tesseróide da Figura
+    \ref{tgg-tess1x1} e o causado por um prisma de mesma massa utilizando uma
+    aproximação plana para a Terra esférica. Nesta aproximação os sistemas
+    locais dos pontos de observação possuem a mesma orientação do sistema local
+    do corpo plano e $1^\circ$ de latitude ou longitude equivale a $111,11\ km$.
+    As diferenças chegam a aproximadamente 7\% na componente $T_{xy}$, porém
+    não passam de 0.5\% na componente $T_{zz}$.}
+  \label{tgg-dif1x1}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/tess-plano-50.png}
+  \caption{\small TGG causado por um tesseróide de
+    $50^\circ \times 50^\circ \times 10\ km$, com densidade $2\ 800\ kg\ m^{-3}$
+    e calculado a $250\ km$ de altitude.}
+  \label{tgg-tess50x50}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.4]{../images/dif-plano-50.png}
+  \caption{\small Diferença entre o TGG causado pelo tesseróide da Figura
+    \ref{tgg-tess50x50} e o causado por um prisma de mesma massa utilizando uma
+    aproximação plana para a Terra esférica. Neste caso, as diferenças chegam a
+    aproximadamente 30\% na componente $T_{zz}$ e aproximadamente 5\% na
+    componente $T_{xy}$.}
+  \label{tgg-dif50x50}
+\end{figure}
+
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=0.5]{../images/topografia-10min-marca-grid.png}
+  \caption{\small Modelo topográfico digital ETOPO1 utilizado para gerar o modelo de
+    tesseróides. O espaçamento da grade é de $10'\times10'$. Em vermelho está
+    marcada a área na qual o TGG foi calculado. }
+  \label{topografia}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=1]{../images/topoeffect-10m-tgg-tmp.png}
+  \caption{\small Efeito da topografia no TGG a $250\ km$ de altitude na região da
+    Bacia do Paraná. Foi utilizada densidade de $2\ 670\ kg\ m^{-3}$ e
+    $N_\varphi = N_\lambda = 2$. Este é um efeito significativo em todas as
+    componentes e deve ser levado em conta durante a modelagem de dados de TGG.}
+  \label{tgg-topografia}
+\end{figure}

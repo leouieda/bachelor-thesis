@@ -1,0 +1,296 @@
+\chapter{Formulação matemática}
+
+\section{Sistemas de coordenadas}
+
+Há dois sistemas de coordenadas envolvidos na formulação matemática deste trabalho
+(Figura \ref{tess-coord-sys}): o sistema geocêntrico (G) e o sistema local (L).
+\\
+\indent O sistema global é um sistema geocêntrico.
+Seu eixo Z é alinhado com o eixo médio de rotação da Terra e aponta no sentido do pólo
+Norte.
+Seu eixo X aponta para o meridiano médio de Greenwich e seu eixo Y completa um sistema
+destro.
+Já o sistema local possui origem em um ponto P qualquer.
+Seu eixo z é alinhado com a reta que passa pelo geocentro e o ponto P e aponta
+no sentido oposto ao geocentro.
+Seu eixo x é tangencial à esfera geocêntrica que passa por P e aponta no sentido
+Norte e seu eixo y completa um sistema sinistral.
+\\
+\indent A mudança de coordenadas entre os dois sistemas pode ser feita
+utilizando as relações apresentadas a seguir.
+Para mudar as coordenadas de um ponto Q do sistema global para o sistema local
+de um ponto P utiliza-se a seguinte transformação
+(VANÍ\v{C}EK; KRAKIWSKY, 1986):
+
+\begin{equation}
+  \mathbf{e}^{L_P}_Q = \underbrace{\mathbf{P}_2
+  \mathbf{R}_2 \left(\varphi_P  -\dfrac{\pi}{2} \right)
+  \mathbf{R}_3 \left(\lambda_P - \pi \right)}_{\mathbf{R}^{GP}}
+  (\mathbf{e}_Q^G - \mathbf{e}_P^G)
+\label{tranf-GtoP}
+\end{equation}
+
+\noindent onde $\mathbf{R}^{GP}$ é a matriz de transformação,
+ $\mathbf{e}^{L_P}_Q$ é o vetor posição do ponto Q no sistema local de P,
+$\mathbf{e}_Q^G$ é o vetor posição do ponto Q no sistema global,
+$\mathbf{e}_P^G$ é o vetor posição do ponto P no sistema global, $\varphi_P$ é a
+latitude do ponto P e $\lambda_P$ sua longitude.
+$\mathbf{P}_2$ é a matriz de reflexão do eixo $Y$, $\mathbf{R}_2$ é a matriz de
+rotação em torno do eixo $Y$, $\mathbf{R}_3$ é a matriz de rotação em torno do
+eixo $Z$.
+Como as matrizes $\mathbf{P}_2$, $\mathbf{R}_2$ e $\mathbf{R}_3$ são ortogonais,
+a relação inversa é dado por:
+
+\begin{equation}
+  \mathbf{e}^{G}_Q = \underbrace{\mathbf{R}_3 \left(\pi - \lambda_P \right)
+  \mathbf{R}_2 \left(\dfrac{\pi}{2} - \varphi_P \right)
+  \mathbf{P}_2 }_{\mathbf{R}^{PG}}
+  \mathbf{e}_Q^{L_P} + \mathbf{e}_Q^G
+\label{tranf-PtoG}
+\end{equation}
+
+\indent Utilizando as equações \eqref{tranf-GtoP} e \eqref{tranf-PtoG}, é possível obter
+a matriz de transformação do sistema local de P para o sistema local de Q
+(Figura \ref{coord-sys}) (WILD-PFEIFFER, 2008):
+
+\[ 
+  \mathbf{e}^{L_P} = \mathbf{P}_2
+    \mathbf{R}_2 \left(\varphi_P  -\dfrac{\pi}{2} \right)
+    \mathbf{R}_3 \left(\lambda_P - \pi \right)
+    \mathbf{e}^G
+\]
+
+\[
+  \mathbf{e}^{G} = \mathbf{R}_3 \left(\pi - \lambda_Q \right)
+    \mathbf{R}_2 \left(\dfrac{\pi}{2} - \varphi_Q \right)
+    \mathbf{P}_2
+    \mathbf{e}^{L_Q}
+\]
+
+\[
+  \mathbf{e}^{L_P} = \mathbf{P}_2
+    \mathbf{R}_2 \left(\varphi_P  -\dfrac{\pi}{2} \right)
+    \mathbf{R}_3 \left(\lambda_P - \pi \right)
+    \mathbf{R}_3 \left(\pi - \lambda_Q \right)
+    \mathbf{R}_2 \left(\dfrac{\pi}{2} - \varphi_Q \right)
+    \mathbf{P}_2
+    \mathbf{e}^{L_Q}
+\]
+
+\[
+  \mathbf{e}^{L_P} = \underbrace{\mathbf{P}_2
+    \mathbf{R}_2 \left(\varphi_P  -\dfrac{\pi}{2} \right)
+    \mathbf{R}_3 \left(\lambda_P - \lambda_Q \right)
+    \mathbf{R}_2 \left(\dfrac{\pi}{2} - \varphi_Q \right)
+    \mathbf{P}_2}_{\mathbf{R}^{QP}}
+    \mathbf{e}^{L_Q}
+\]
+
+\begin{equation}
+  \mathbf{R}^{QP} = \mathbf{P}_2
+    \mathbf{R}_2 \left(\varphi_P  -\dfrac{\pi}{2} \right)
+    \mathbf{R}_3 \left(\lambda_P - \lambda_Q \right)
+    \mathbf{R}_2 \left(\dfrac{\pi}{2} - \varphi_Q \right)
+    \mathbf{P}_2
+\label{tranf-QtoP}
+\end{equation}
+
+\noindent onde a matriz $\mathbf{R}^{QP}$ é a matriz de transformação.
+
+
+\section{Tesseróide}
+
+Um tesseróide é um elemento geométrico limitado por duas esferas concêntricas de
+raios $r_1$ e $r_2$, dois planos meridianos $\lambda_1$ e
+$\lambda_2$ e duas superfícies cônicas que passam pelo centro da esfera e pelas
+paralelas $\varphi_1$ e $\varphi_2$ (Figura \ref{tess-coord-sys}).
+\\
+\indent O potencial gravitacional ($V$) calculado no ponto P é dado por
+(HEISKANEN; MORITZ, 1967):
+
+\begin{equation}
+  V(P) = G \int\limits_\Omega \dfrac{\rho}{l}\ d\Omega
+\label{pot-generic}
+\end{equation}
+
+onde $G$ é a constante gravitacional, $\rho$ é a distribuição de densidade
+dentro do volume $\Omega$ e $l$ é a distância do ponto de integração Q ao ponto
+de observação P.
+Quando o volume $\Omega$ for um tesseróide de densidade constante $\rho$, $V$
+pode ser expresso por uma integral tripla utilizando coordenadas esféricas do
+sistema global.
+
+\begin{equation}
+  V(r, \varphi, \lambda) = G \rho \int\limits_{\lambda_1}^{\lambda_2}
+    \int\limits_{\varphi_1}^{\varphi_2}
+    \int\limits_{r_1}^{r_2} \dfrac{1}{l} {r'}^2\cos\varphi'\ dr'\ d\varphi'\ d\lambda'
+\label{pot-tess}
+\end{equation}
+
+\noindent onde
+
+\[
+ l = \sqrt{r^2 + {r'}^2 - 2 r r' \cos \psi}
+\]
+\noindent e
+\[
+ \cos \psi = \sin\varphi \sin\varphi' + \cos\varphi \cos\varphi' \cos(\lambda - \lambda')
+\]
+
+
+\section{TGG em coordenadas esféricas}
+
+O TGG é um tensor $T$ composto por nove elementos definidos pelas segundas
+derivadas de $V$ com relação ao sistema local do ponto de observação.
+$T$ é simétrico pois o campo gravitacional é irrotacional e possui cinco
+componentes independentes pois $V$ obedece a equação de Laplace.
+
+\begin{equation}
+  T = \begin{pmatrix}
+              T_{xx} & T_{xy} & T_{xz} \\
+              T_{yx} & T_{yy} & T_{yz} \\
+              T_{zx} & T_{zy} & T_{zz}
+      \end{pmatrix} =
+      \begin{pmatrix}
+              \dfrac{\partial^2 V}{\partial x^2}  &
+              \dfrac{\partial^2 V}{\partial x \partial y} &
+              \dfrac{\partial^2 V}{\partial x \partial z} \\[4mm]
+              \dfrac{\partial^2 V}{\partial y \partial x} &
+              \dfrac{\partial^2 V}{\partial y^2} &
+              \dfrac{\partial^2 V}{\partial y \partial z} \\[4mm]
+              \dfrac{\partial^2 V}{\partial z \partial x} &
+              \dfrac{\partial^2 V}{\partial z \partial y} &
+              \dfrac{\partial^2 V}{\partial z^2}
+      \end{pmatrix}
+\label{tgg-cart}
+\end{equation}
+
+\indent Em coordenadas esféricas, as componentes do TGG são dadas por
+(TSCHERNING, 1976):
+
+\begin{subequations}
+\begin{align}
+  T_{xx} &= \dfrac{1}{r^2} \left( \dfrac{\partial^2 V}{\partial\varphi^2} +
+    r \dfrac{\partial V}{\partial r}  \right)
+  \label{txx-esf}
+  \\[4mm]
+  T_{xy} &= \dfrac{1}{r^2 \cos\varphi} \left(
+    \dfrac{\partial^2 V}{\partial\varphi\partial\lambda} +
+    \tan\varphi \dfrac{\partial V}{\partial \lambda} \right) = T_{yx}
+  \label{txy-esf}
+  \\[4mm]
+  T_{xz} &= \dfrac{1}{r} \left( \dfrac{\partial^2 V}{\partial\varphi \partial r} -
+    \dfrac{1}{r} \dfrac{\partial V}{\partial \varphi}\right) = T_{zx}
+  \label{txz-esf}
+  \\[4mm]
+  T_{yy} &= \dfrac{1}{r^2 \cos^2\varphi} \left(
+    \dfrac{\partial^2 V}{\partial \lambda^2} +
+    r\cos^2\varphi\dfrac{\partial V}{\partial r} -
+    \cos\varphi \sin\varphi \dfrac{\partial V}{\partial \varphi}  \right)
+  \label{tyy-esf}
+  \\[4mm]
+  T_{yz} &= \dfrac{1}{r \cos\varphi} \left(
+    \dfrac{\partial^2 V}{\partial r \partial\lambda} -
+    \dfrac{1}{r} \dfrac{\partial V}{\partial \lambda} \right) = T_{zy}
+  \label{tyz-esf}
+  \\[4mm]
+  T_{zz} &= \dfrac{\partial^2 V}{\partial r^2}
+  \label{tzz-esf}
+\end{align}
+\label{tgg-esf}
+\end{subequations}
+
+\indent As integrais resultantes da aplicação de \eqref{pot-tess} em
+\eqref{txx-esf} a \eqref{tzz-esf} podem ser resolvidas numericamente, por
+exemplo utilizando a Quadratura Gauss-Legendre 3D.
+Outra possibilidade é integrar analiticamente na variável $r$ e resolver a
+integral dupla resultante com uma Quadratura Gauss-Legendre 2D
+(WILD-PFEIFFER, 2008).
+
+
+
+\section{Quadratura Gauss-Legendre}
+
+O método da Quadratura Gauss-Legendre consiste em discretizar o integrando e
+aproximar a integral por uma somatória com a seguinte forma (HILDEBRAND, 1987):
+
+\begin{equation}
+  \int\limits_a^b f(x)\ dx \approx \dfrac{b-a}{2}
+    \sum\limits_{i=1}^N W_i\ f(x_i)
+\label{qgl-1d}
+\end{equation}
+
+\noindent onde os pontos de discretização $x_i$ (também denominados ``nós') são
+as raízes do polinômio de Legendre $P_N(x)$ de ordem N e os pesos $W_i$ são
+dados por (HILDEBRAND, 1987):
+
+\begin{equation}
+  W_i = \dfrac{2}{(1-x_i^2) \left( P_N' (x_i) \right)^2}
+\label{pesos}
+\end{equation}
+
+\indent $P_N(x)$ e sua primeira derivada podem ser calculados através das seguintes
+relações recursivas:
+
+\begin{equation}
+  P_N'(x) = \dfrac{N}{x^2-1} \left( x P_n(x) - P_{N-1}(x) \right)
+\label{rel-recur1}
+\end{equation}
+
+\begin{equation}
+  P_N(x) = x \dfrac{2N-1}{N} P_{N-1}(x) - \dfrac{N-1}{N} P_{N-2}(x)
+\label{rel-recur2}
+\end{equation}
+
+\indent Para utilizar a QGL para calcular o TGG de um tesseróide, a equação
+\eqref{qgl-1d} pode ser facilmente estendida para integrais duplas (2D):
+
+\begin{equation}
+  \int\limits_{x_1}^{x_2}
+  \int\limits_{y_1}^{y_2}
+  f(x,y)\ dx\ dy  \approx
+    \dfrac{(x_2 - x_1)(y_2 - y_1)}{4}
+    \sum\limits_{i=1}^{N_x}
+    \sum\limits_{j=1}^{N_y}
+    W_{x,i}\ W_{y,j}\ f(x_i, y_j)
+\label{qgl-2d}
+\end{equation}
+
+\noindent ou triplas (3D):
+
+\begin{multline}
+  \int\limits_{x_1}^{x_2}
+  \int\limits_{y_1}^{y_2}
+  \int\limits_{z_1}^{z_2}
+  f(x,y,z)\ dx\ dy\ dz  \approx\\
+    \dfrac{(x_2 - x_1)(y_2 - y_1)(z_2 - z_1)}{8}
+    \sum\limits_{i=1}^{N_x}
+    \sum\limits_{j=1}^{N_y}
+    \sum\limits_{k=1}^{N_z}
+    W_{x,i}\ W_{y,j}\ W_{z,k}\ f(x_i, y_j, z_k)
+\label{qgl-3d}
+\end{multline}
+
+
+
+% FIGURAS
+\newpage
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=1]{../images/tesseroid_coordsys_other.pdf}
+  \caption{\small Tesseróide no sistema global (G) e o sistema local (L) do ponto P.
+  $l$ é a distância entre o ponto P e o ponto Q pertencente ao tesseróide.}
+  \label{tess-coord-sys}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+    \includegraphics[scale=1]{../images/coordinate_sys.pdf}
+  \caption{\small Sistemas locais dos pontos P e Q e um prisma retangular com face
+           superior centrada em Q. O sistema local do ponto Q é o sistema no
+           qual o TGG do prisma é calculado utilizando as fórmulas de
+           Nagy \textit{et al.} (2000). A transformação do TGG para o sistema
+           local do ponto de observação P é necessária para dar significado
+           físico aos resultados.}
+  \label{coord-sys}
+\end{figure}

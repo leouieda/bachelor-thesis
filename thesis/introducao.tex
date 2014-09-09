@@ -1,0 +1,75 @@
+\chapter{Introdução}
+
+A missão de satélite GOCE (Gravity Field and steady-state Ocean Circulation
+Explorer) foi planejada pela European Space Agency (ESA) com o objetivo de
+medir o campo gravitacional da Terra com acurácia sem precedentes.
+Para alcançar este objetivo, o satélite carregará um gradiômetro capaz de medir
+todas as componentes do tensor gradiente da gravidade (TGG).
+Além disso, como missões por satélite cobrem todo o globo, seus dados poderão
+ser utilizados para estudar áreas extensas, como por exemplo em estudos
+litosféricos, onde não seria possível obter uma cobertura contínua e homogênea
+utilizando métodos terrestres.
+Ao estudar áreas muito extensas, considerações rotineiras e simplistas de Terra
+plana apresentam limitações.
+Logo, é necessário levar em conta a curvatura da Terra durante a modelagem e
+interpretação dos dados de satélite.
+Neste caso, utilizar prismas retangulares para representar o corpo ou estruturas
+a serem modelados pode não ser uma aproximação adequada, como já demonstrado
+em Smith \textit{et al.} (2001).
+Uma alternativa é utilizar tesseróides, também chamados de prismas esféricos.
+A definição de tesseróide e o cálculo de seu efeito gravitacional e suas
+derivadas serão apresentados no Capítulo 2, Seção 2.2.
+Um fator limitante desta abordagem é que as equações integrais que descrevem o
+TGG de um tesseróide não possuem solução analítica.
+Para contornar este obstáculo podem ser utilizados métodos numéricos de
+integração, como por exemplo, a Quadratura Gauss-Legendre (QGL).
+\\
+\indent O uso da QGL em métodos potenciais foi inicialmente proposto e analisado por
+Ku (1977) para calcular a componente vertical da gravidade e o campo magnético
+de prismas.
+Mais recentemente, Asgharzadeh \textit{et al.} (2007) propôs o uso da QGL para
+calcular o TGG causado por tesseróides e utilizá-los na modelagem direta de
+corpos com geometria esférica.
+Também foi proposta a utilização de tesseróides em aplicações geodésicas, como
+no calculo de ``anomalias de Helmert'' (SMITH \textit{et al.}, 2001) e na
+implementação da técnica ``remove-compute-restore''
+(FORSBERG; TSCHERNING, 1997, apud WILD-PFEIFFER, 2008)
+\footnote{FORSBERG, R.; TSCHERNING, C.C. Topographic effects in gravity
+  modelling for BVP. In: SANSÒ F.; RUMMEL, R;.\textbf{(eds) Geodetic boundary
+  value problems in view of the one centimetre geoid} Lecture notes in earth
+  sciences, v. 65. Springer, Berlin p. 241-272, 1997.}.
+Com esta aplicação, Wild-Pfeiffer (2008) propôs estimar as componentes do TGG de
+tesseróides resolvendo analiticamente a integral na direção radial e utilizar
+integração numérica somente nas integrais duplas restantes.
+Este algoritmo foi comparado com o uso de outros elementos de massa, como massa
+pontual, prisma retangular, camada equivalente e linha de massa, para os quais
+existem fórmulas analíticas.
+Esta comparação mostrou que o uso de tesseróides com a solução computacional
+proposta apresenta uma razão precisão/velocidade melhor que a dos outros
+elementos de massa.
+\\
+\indent Um método alternativo para calcular as integrais foi proposto por
+Heck e Seitz (2007) utilizando a expansão em série de Taylor do integrando.
+Este método fornece resultados com precisão aceitável quando o tesseróide está
+longe do ponto de observação e em regiões de baixa latitude.
+Quando o tesseróide está perto do ponto de observação ou em regiões de alta
+latitude a aproximação pela série de Taylor mostrou-se pouco precisa e não deve
+ser utilizada.
+Os trabalhos publicados até o momento sugerem que a QGL é o método mais
+adequado para calcular o TGG gerado por tesseróides, uma vez que esta não
+apresenta as limitações numéricas da expansão em série de Taylor do integrando.
+\\
+\indent Neste trabalho os tesseróides serão utilizados no cálculo direto das componentes
+do TGG devido a grandes estruturas geológicas e para a altura da trajetória do
+satélite GOCE que é de aproximadamente 250 km.
+Para isso, será implementado um programa computacional para o cálculo direto do
+TGG seguindo a abordagem proposta por Wild-Pfeiffer (2008).
+A precisão desta implementação pode ser avaliada comparando seus resultados com
+o resultado de fórmulas analíticas, existentes para o caso especial de uma
+casca esférica com ponto de observação em um dos pólos (WILD-PFEIFFER, 2008).
+Também será avaliado se esta metodologia sofre das mesmas limitações numéricas
+observadas por Ku (1977).
+Finalmente, o programa desenvolvido será utilizado em duas aplicações: para
+calcular as diferenças causadas no TGG entre utilizar uma aproximação plana ou
+esférica para a Terra; e para calcular o efeito das massas topográficas da
+região da bacia do Paraná no TGG a 250 km de altitude.

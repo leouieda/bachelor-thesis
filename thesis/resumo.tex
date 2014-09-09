@@ -1,0 +1,29 @@
+\begin{center}
+\section*{Resumo}
+\addcontentsline{toc}{chapter}{Resumo}
+\end{center}
+
+A missão de satélite GOCE tem o objetivo de medir o campo gravitacional da Terra
+com acurácia sem precedentes através de medições do tensor gradiente da
+gravidade (TGG).
+Os dados provenientes desta missão poderão ser utilizados para estudar áreas
+extensas, onde considerações de Terra plana podem apresentar limitações.
+Para levar em conta a curvatura da Terra a modelagem pode ser feita utilizando
+tesseróides, também chamados de prismas esféricos.
+O TGG causado por um tesseróide pode ser calculado utilizando métodos numéricos
+de integração, como por exemplo, a Quadratura Gauss-Legendre (QGL).
+Neste trabalho foi implementado um programa computacional para o cálculo direto
+do TGG utilizando a QGL.
+A precisão desta implementação foi avaliada comparando seus resultados com o
+resultado de fórmulas analíticas para o caso especial de uma casca esférica.
+Em seguida, o programa desenvolvido foi utilizado para calcular as diferenças
+causadas no TGG pela aproximação plana para a Terra.
+Estas diferenças são de até 30\% na componente $T_{zz}$ para um modelo de
+$50^\circ \times 50^\circ \times 10\ km$.
+Por fim,  o programa desenvolvido foi utilizado para calcular o efeito das
+massas topográficas no TGG a 250 km de altitude para a região da bacia do
+Paraná.
+Em regiões de variações expressivas da topografia, as amplitudes das
+componentes do TGG devido às massas topográficas possuem a mesma ordem de
+grandeza do efeito no TGG causado por anomalias de densidade no interior da
+crosta e manto.
